@@ -2,26 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-satisfy: 'Satisfy', cursive; 
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 0, 0, 0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(2,0,36);
+  background: white;
+  font-family: var(--font-satisfy);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.heroImage {
+  display: flex;
+  justify-content: center;
+  background-image: url("/images/h1-img-1.png");
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.heroImage1 {
+  background-image: url("/images/hero-img-3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  height: 40rem;
+}
+.heroimageCenter{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.heroImage2 {
+  display: flex ;
+  justify-content: center;
+  background-image:url("/images/hero-img-2.jpg");
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  height: 40rem;
+}
+
+.heroImage3 {
+  display: flex;
+  justify-content: center;
+  background-image: url("/images/hero-img-1.jpg");
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  height: 40rem;
+}
+
+
+.homeheroLabourtext {
+  font-size: 4rem;
+  font-family: "Satisfy", cursive;
+  background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(246, 246, 249) 0%, rgb(244, 244, 245) 47%, rgb(255, 255, 255) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }

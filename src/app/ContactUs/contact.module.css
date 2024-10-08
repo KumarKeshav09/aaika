@@ -1,0 +1,180 @@
+.forthSection {
+    background-color: #3F51B5;
+}
+
+.forthSectionImg {
+    background-color: white;
+    justify-content: center;
+    display: flex;
+    width: 36%;
+}
+
+.forthBoxDisplayForm {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.forthSectionInner {
+    display: flex;
+    padding-left: 5rem;
+    padding-top: 2rem;
+    padding-right: 3rem;
+    padding-bottom: 2rem;
+    margin-right: 5rem;
+}
+
+.forthBoxText {
+    font-size: 4rem;
+    font-weight: bold;
+    text-wrap: nowrap;
+}
+
+.forthBoxForm {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.forthBoxInput {
+    display: flex;
+    margin-top: 4rem;
+}
+
+.forthBoxMain {
+    margin-left: 3rem;
+}
+
+.forthBoxButton {
+    display: flex;
+    align-items: end;
+    margin-left: 2rem;
+}
+
+.forthButton {
+    padding: 1rem 3rem;
+    background: white;
+    color: black;
+    font-weight: 600;
+    margin-top: auto;
+}
+
+.forthButton:hover {
+    background-color: #26358b;
+    color: white;
+}
+
+@media screen and (max-width: 1750px) {
+    .forthSectionInner {
+        padding-left: 8rem;
+        width: 75%;
+    }
+
+    .forthBoxText {
+        text-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 1361px) {
+    .forthSectionInner {
+        padding-left: 3rem;
+        padding-right: 0rem;
+
+        width: 72%;
+        margin-right: 0rem;
+
+    }
+
+    .forthSection {
+        margin-right: 0rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .forthSectionInner {
+        padding-left: 1rem;
+        width: 72%;
+        margin-right: 0rem;
+
+    }
+}
+
+@media screen and (max-width: 1025px) {
+    .forthSection {
+        width: 100%;
+    }
+
+    .forthSectionInner {
+        display: flex;
+        flex-direction: column;
+        padding-left: 5rem;
+        padding-right: 5rem;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        width: 100%;
+    }
+
+    .forthBoxInput {
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .forthButton {
+        margin-top: 2rem;
+    }
+
+    .forthSectionImg {
+        display: none !important;
+    }
+
+    .forthBoxInput2 {
+        margin-top: 1.5rem;
+    }
+
+    .forthBoxButton {
+        margin-left: 0rem;
+    }
+
+    .forthBoxDisplayForm {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .forthBoxText {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .forthBoxInput {
+        display: flex;
+        margin-top: 2rem;
+    }
+
+    .forthSectionImg {
+        display: none !important;
+    }
+
+    .forthBoxForm {
+        margin-top: 0rem;
+    }
+
+    .forthBoxInput2 {
+        margin-top: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .forthSectionInner {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        width: 100%;
+    }
+
+    .forthBoxMain {
+        margin-left: 0.5rem;
+    }
+}
