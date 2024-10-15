@@ -19,10 +19,10 @@ export default function Navbar() {
   const isActive = (path) => pathname === path;
 
   return (
-    <nav className={`h-18 ${pathname === "/" ? 'bg-gray-800 dark:bg-gray-900' : 'bg-gray-900 dark:bg-black'} w-full relative z-50 top-0 start-0`}>
+    <nav className={`h-18   bg-black w-full relative z-50 top-0 start-0`}>
       <div className={`${styles.navMain} max-w-screen flex flex-wrap items-center justify-between mx-auto py-4 md:px-28`}>
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="/images/header-logo-light.png" className="h-12" alt="Logo" />
+          <img src="/images/logo.png" className="h-12" alt="Logo" />
         </Link>
 
         <button
@@ -38,30 +38,30 @@ export default function Navbar() {
           </svg>
         </button>
         <div className={`${styles.navUlMain} ${isMobileMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-auto`} id="navbar-default">
-          <ul className={`font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-black dark:border-gray-700`}>
+          <ul className={` flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-black dark:border-gray-700`}>
             <li>
               <Link href="/" className={`${isActive("/") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/aboutus" className={`${isActive("/aboutus") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+              <Link href="/AboutUs" className={`${isActive("/AboutUs") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
                 About
               </Link>
             </li>
             <li>
-              <Link href="/services" className={`${isActive("/services") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+              <Link href="/Services" className={`${isActive("/Services") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
                 Services
               </Link>
             </li>
             <li>
-              <Link href="/resources" className={`${isActive("/resources") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
-                Resources
+              <Link href="/Menu" className={`${isActive("/Menu") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+                Menu
               </Link>
             </li>
             <li>
-              <Link href="/product" className={`${isActive("/product") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
-                Product
+              <Link href="/Gallery" className={`${isActive("/Gallery") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+                Gallery
               </Link>
             </li>
             <li>
