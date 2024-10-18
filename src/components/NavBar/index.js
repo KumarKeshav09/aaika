@@ -64,9 +64,19 @@ export default function Navbar() {
                 Gallery
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/ContactUs" className={`${isActive("/ContactUs") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
                 Contact
+              </Link>
+            </li> */}
+            <li>
+              <Link href="https://www.zomato.com/jaipur/aaika-homemade-mansarovar/order" target="_blank" className={`${isActive("/ContactUs") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+               <img src="https://pbs.twimg.com/profile_images/1676632284215271425/zXmKVN-f_400x400.jpg" className="w-10 h-10" />
+              </Link>
+            </li>
+            <li>
+              <Link href="https://www.swiggy.com/city/jaipur/aaika-homemade-swarn-path-aaika-homemade-rest588815" target="_blank"  className={`${isActive("/ContactUs") ? "active-tab" : ""} block text-lg py-2 px-3 text-white`}>
+              <img src="https://pngimagesfree.com/wp-content/uploads/Swiggy-Logo-Vector@.png" className="w-10 h-10" />
               </Link>
             </li>
           </ul>
