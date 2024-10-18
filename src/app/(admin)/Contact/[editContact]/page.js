@@ -79,7 +79,7 @@ const EditContact = ({ params }) => {
   return (
     <section className="md:p-5">
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Edit Your Contact Details
+        Edit Contact
       </h1>
       <Link href="/Contact">
         <div className="mb-5 mt-5">

@@ -1,44 +1,24 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { API_BASE_URL } from "../../../../../utils/constants";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const EditGalleryPage = ({ params }) => {
+const TestimonialPage = () => {
   const [image, setImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const imageInputRef = useRef(null);
-  const router = useRouter();
-  const galleryId = params.editGallery;
 
   const acceptedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
 
-  // Fetch gallery data by ID
-  useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/gallery/getGalleryById/${galleryId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch gallery');
-        }
-        const data = await response.json();
-        if (data.imageLink) {
-          setUploadedImage(data.imageLink);
-        }
-      } catch (error) {
-        toast.error(`Error: ${error.message}`);
-      }
-    };
-    fetchGallery();
-  }, [galleryId]);
-
   const handleImageInputChange = async (e) => {
     const file = e.target.files[0];
+
     if (file && acceptedFileTypes.includes(file.type)) {
       setImage(file);
-      await handleUpload(file);
+      await handleUpload(file); // Automatically upload the image
     } else {
       toast.error("Invalid image type. Please upload only JPEG or PNG files.");
       resetImageInput();
@@ -70,6 +50,8 @@ const EditGalleryPage = ({ params }) => {
       }
 
       const resData = await response.json();
+      console.log("Image upload response:", resData);
+
       if (resData?.imageUrl) {
         return { imageUrl: resData.imageUrl };
       } else {
@@ -93,27 +75,33 @@ const EditGalleryPage = ({ params }) => {
     }
   };
 
+  const router = useRouter();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    const testimonialData = { imageLink: uploadedImage || "" };
-    
+
+    const testimonialData = { image: uploadedImage || "" }; // Use an empty string if no image is uploaded
+
+    console.log("Submitting testimonial data:", testimonialData);
+
     try {
-      const response = await fetch(`${API_BASE_URL}/gallery/updateGallery/${galleryId}`, {
-        method: "PUT",
+      const response = await fetch(`${API_BASE_URL}/banner/createBanner`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(testimonialData),
       });
 
       const result = await response.json();
+      console.log("Banner creation response:", result);
       if (response.ok) {
-        toast.success("Gallery updated successfully!");
-        router.push("/GalleryAdmin");
+        toast.success("Banner created");
+        resetForm();
+        router.push("/Banner");
       } else {
-        toast.error("Gallery update failed: " + result.message);
+        toast.error(`Banner creation failed: ${result}`);
       }
     } catch (error) {
-      toast.error("Error updating gallery: " + error.message);
+      console.error("Error creating testimonial:", error);
     }
   };
 
@@ -126,9 +114,9 @@ const EditGalleryPage = ({ params }) => {
   return (
     <section className="md:p-5">
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Edit Gallery
+        Add Banner
       </h1>
-      <Link href="/GalleryAdmin">
+      <Link href="/Banner">
         <div className="mt-7">
           <button
             className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
@@ -154,6 +142,7 @@ const EditGalleryPage = ({ params }) => {
               accept="image/*"
               ref={imageInputRef}
               className="bg-gray-50 border border-gray-300 rounded-md w-full text-gray-900"
+              required
             />
           </div>
           <button
@@ -161,7 +150,7 @@ const EditGalleryPage = ({ params }) => {
             disabled={!uploadedImage}
             className="mt-4 bg-gray-900 text-white font-bold py-2 px-4 rounded"
           >
-            Update Gallery
+            Submit Banner
           </button>
         </form>
       </div>
@@ -169,4 +158,4 @@ const EditGalleryPage = ({ params }) => {
   );
 };
 
-export default EditGalleryPage;
+export default TestimonialPage;

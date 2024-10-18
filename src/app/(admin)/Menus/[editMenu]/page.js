@@ -139,7 +139,7 @@ export default function EditMenu({ params }) {
   return (
     <section className="md:p-5">
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Edit Your Menu Details
+        Edit Menu
       </h1>
       <Link href="/Menus">
         <div className="mb-5 mt-5">

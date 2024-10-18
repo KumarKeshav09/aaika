@@ -3,12 +3,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Styles from "./sidebar.module.css";
+import Cookies from "js-cookie";
 
 export default function Sidebar({ childrenT }) {
   const pathname = usePathname();
   const router = useRouter();
 
   const handleSignOut = () => {
+    Cookies.remove('token');
     router.push('/login');
   };
 
@@ -131,29 +133,6 @@ export default function Sidebar({ childrenT }) {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                href="/Testimonials"
-                to="/Testimonials"
-                onClick={() => handleTabClick("Testimonials")}
-                className={` ${activeTab?.includes("Testimonials")
-                    ? Styles.activeTab
-                    : Styles.inactiveTab
-                  } flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
-              >
-                <svg
-                  className={`${activeTab?.includes("Testimonials") ? Styles.tabSvg : Styles.inactiveTab
-                    } flex-shrink-0 w-5 h-5 text-gray-900 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-black`}
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 18 18"
-                >
-                  <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.857V2.571A1.857 1.857 0 0 0 6.143 0Zm0 5.143H1.857v-2.29h4.286v2.29Zm10.286-5.143h-4.286A1.857 1.857 0 0 0 11 2.571v4.286A1.857 1.857 0 0 0 12.857 8h4.286A1.857 1.857 0 0 0 19 6.857V2.571A1.857 1.857 0 0 0 17.143 0Zm-1.857 2.29v2.29h-4.286v-2.29h4.286Zm-7.236 8.066a.75.75 0 0 0-.741-.076c-1.434.792-3.341.793-4.914.002a.75.75 0 1 0-.757 1.296c1.73 1.006 3.81 1.008 5.566 0a.75.75 0 0 0 .757-1.296Zm4.095-.682a.75.75 0 0 0-1.036.277c-.835 1.588-2.268 2.425-3.952 2.425-1.674 0-3.055-.829-3.883-2.446a.75.75 0 0 0-1.318.674c.965 1.842 2.707 2.788 4.934 2.788 2.437 0 4.52-1.151 5.334-3.183a.75.75 0 0 0-.277-1.036Z" />
-                </svg>
-                <span className="ms-3">Testimonials</span>
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/Menus"
                 to="/Menus"
                 onClick={() => handleTabClick("Menus")}
@@ -243,6 +222,52 @@ export default function Sidebar({ childrenT }) {
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                 </svg>
                 <span className="ms-3">Contact</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/Banner"
+                to="/Banner"
+                onClick={() => handleTabClick("Banner")}
+                className={` ${activeTab?.includes("Banner")
+                    ? Styles.activeTab
+                    : Styles.inactiveTab
+                  } flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
+              >
+                <svg
+                  className={`${activeTab?.includes("Banner") ? Styles.tabSvg : Styles.inactiveTab
+                    } flex-shrink-0 w-5 h-5 text-gray-900 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-black`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 18"
+                >
+                  <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                </svg>
+                <span className="ms-3">Banner</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/Testimonials"
+                to="/Testimonials"
+                onClick={() => handleTabClick("Testimonials")}
+                className={` ${activeTab?.includes("Testimonials")
+                    ? Styles.activeTab
+                    : Styles.inactiveTab
+                  } flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-blue-700 group`}
+              >
+                <svg
+                  className={`${activeTab?.includes("Testimonials") ? Styles.tabSvg : Styles.inactiveTab
+                    } flex-shrink-0 w-5 h-5 text-gray-900 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-black`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 18 18"
+                >
+                  <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.857V2.571A1.857 1.857 0 0 0 6.143 0Zm0 5.143H1.857v-2.29h4.286v2.29Zm10.286-5.143h-4.286A1.857 1.857 0 0 0 11 2.571v4.286A1.857 1.857 0 0 0 12.857 8h4.286A1.857 1.857 0 0 0 19 6.857V2.571A1.857 1.857 0 0 0 17.143 0Zm-1.857 2.29v2.29h-4.286v-2.29h4.286Zm-7.236 8.066a.75.75 0 0 0-.741-.076c-1.434.792-3.341.793-4.914.002a.75.75 0 1 0-.757 1.296c1.73 1.006 3.81 1.008 5.566 0a.75.75 0 0 0 .757-1.296Zm4.095-.682a.75.75 0 0 0-1.036.277c-.835 1.588-2.268 2.425-3.952 2.425-1.674 0-3.055-.829-3.883-2.446a.75.75 0 0 0-1.318.674c.965 1.842 2.707 2.788 4.934 2.788 2.437 0 4.52-1.151 5.334-3.183a.75.75 0 0 0-.277-1.036Z" />
+                </svg>
+                <span className="ms-3">Testimonials</span>
               </Link>
             </li>
             <li>

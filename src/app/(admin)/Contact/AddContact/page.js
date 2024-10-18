@@ -35,23 +35,25 @@ const AddContact = () => {
     }));
   };
 
+  const handleRemoveSocialMedia = (index) => {
+    const newSocialMedia = formData.socialMedia.filter((_, i) => i !== index);
+    setFormData((prev) => ({ ...prev, socialMedia: newSocialMedia }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/contact/createContact`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      
+      const response = await fetch(`${API_BASE_URL}/contact/createContact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       if (response.ok) {
         toast.success("Contact added successfully");
-        router.push('/Contact');
+        router.push("/Contact");
       } else {
         const errorMessage = await response.text();
         toast.error(`Error adding contact: ${errorMessage}`);
@@ -65,7 +67,7 @@ const AddContact = () => {
   return (
     <section className="md:p-5">
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Add Your Contact Details
+        Add Contact
       </h1>
       <Link href="/Contact">
         <div className="mb-5 mt-5">
@@ -150,7 +152,16 @@ const AddContact = () => {
             </div>
           </div>
 
-          <h2 className="text-lg font-semibold">Social Media</h2>
+          <div className="flex justify-between my-4">
+            <h2 className="text-lg font-semibold">Social Media</h2>
+            <button
+              type="button"
+              onClick={handleAddSocialMedia}
+              className="bg-white border text-nowrap text-black rounded-md p-2 mr-5"
+            >
+              Add more
+            </button>
+          </div>
           {formData.socialMedia.map((social, index) => (
             <div key={index} className="flex space-x-2">
               <input
@@ -171,21 +182,23 @@ const AddContact = () => {
                 className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
                 required
               />
+              <button
+                type="button"
+                onClick={() => handleRemoveSocialMedia(index)}
+                className="bg-red-500 text-nowrap text-white rounded-md p-2"
+              >
+                Remove
+              </button>
             </div>
           ))}
-          <button
-            type="button"
-            onClick={handleAddSocialMedia}
-            className="bg-blue-500 text-white rounded-md p-2 mt-2 mr-5"
-          >
-            Add Social Media
-          </button>
-          <button
-            type="submit"
-            className="bg-gray-900 text-white rounded-md p-2 mt-4"
-          >
-            Submit
-          </button>
+          <div className="flex md:justify-center">
+            <button
+              type="submit"
+              className="bg-gray-900 text-white rounded-md p-2 px-6 mt-2"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </section>

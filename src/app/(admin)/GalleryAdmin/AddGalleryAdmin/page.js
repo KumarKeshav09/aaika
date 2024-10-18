@@ -115,7 +115,7 @@ const TestimonialPage = () => {
   return (
     <section className="md:p-5">
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Add Your Gallery Details
+        Add Gallery
       </h1>
       <Link href="/GalleryAdmin">
         <div className="mt-7">

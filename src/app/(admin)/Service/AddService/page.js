@@ -77,7 +77,7 @@ const CreateService = () => {
   return (
     <section className='md:p-5'>
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Add Your Service Details
+        Add Service
       </h1>
       <Link href="/Service">
         <div className="mt-7">
@@ -124,7 +124,7 @@ const CreateService = () => {
           </div>
           <button 
             type="submit" 
-            className="bg-gray-900 text-white rounded p-2 hover:bg-blue-600"
+            className="bg-gray-900 text-white rounded p-2 hover:bg-gray-600"
           >
             Submit
           </button>

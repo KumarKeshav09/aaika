@@ -111,7 +111,7 @@ export default function AddMenu() {
       }
 
       toast.success("Menu created successfully!");
-      r.push("/Menus")
+      r.push("/Menus");
       const data = JSON.parse(textResponse);
       console.log("Menu created:", data); // Log the created menu
     } catch (error) {
@@ -119,11 +119,14 @@ export default function AddMenu() {
     }
   };
 
+  const handleRemoveSubmenu = (index) => {
+    const newSubmenu = submenu.filter((_, i) => i !== index);
+    setSubmenu(newSubmenu);
+  };
+
   return (
     <section className="md:p-5">
-      <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Add Your Menu Details
-      </h1>
+      <h1 className="text-2xl text-black underline mb-3 font-bold">Add Menu</h1>
       <Link href="/Menus">
         <div className="mb-5 mt-5">
           <button
@@ -207,7 +210,16 @@ export default function AddMenu() {
             ></textarea>
           </div>
 
-          <h2 className="text-xl font-semibold">Submenu Items</h2>
+          <div className="flex justify-between">
+            <h2 className="text-xl font-semibold">Submenu Items</h2>
+            <button
+              type="button"
+              onClick={handleAddSubmenu}
+              className="bg-white text-gray-900 border px-4 py-2 rounded mr-5"
+            >
+              Add Submenu Item
+            </button>
+          </div>
           {submenu.map((item, index) => (
             <div key={index} className="flex space-x-2 mb-2">
               <div className="flex-1">
@@ -268,16 +280,17 @@ export default function AddMenu() {
                   />
                 )}
               </div>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => handleRemoveSubmenu(index)}
+                  className="bg-red-500 text-white px-2 p-2 py-2 mt-6 rounded"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))}
-
-          <button
-            type="button"
-            onClick={handleAddSubmenu}
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-5"
-          >
-            Add Submenu Item
-          </button>
 
           <button
             type="submit"

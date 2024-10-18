@@ -126,7 +126,7 @@ const EditTestimonialPage = ({ params }) => {
   return (
     <section>
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Edit Your Testimonial
+        Edit Testimonial
       </h1>
       <Link href="/Testimonials">
         <div className="mt-7">

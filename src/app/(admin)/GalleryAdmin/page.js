@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { API_BASE_URL, WEB_BASE_URL } from "../../../../utils/constants";
 import { toast } from "react-toastify";
 import Popup from "@/components/Popup";
+import Pagination from "@/components/Pagination";
 
 export default function Testimonial() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -79,20 +80,32 @@ export default function Testimonial() {
     setIsPopupOpen(true);
   };
 
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
+
   return (
     <section className="md:p-5">
       <div className="relative overflow-x-auto sm:rounded-lg">
         <h1 className="text-2xl text-black underline mb-3 font-bold">Gallery</h1>
-        <div className="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+        <div className="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 justify-end pb-4">
           <div>
             <Link href={"/GalleryAdmin/AddGalleryAdmin"}>
               <button
-                className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 type="button"
               >
                 + Add Gallery Image
               </button>
             </Link>
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="px-4 border rounded-lg" // Update search term on input change
+            />
           </div>
         </div>
 
@@ -126,7 +139,7 @@ export default function Testimonial() {
               </tr>
             </thead>
             <tbody>
-              {listData?.map((item,index) => (
+              {listData?.galleries?.map((item,index) => (
                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td className="px-6 py-4">{index + 1}</td>
                   <td className="px-6 py-4"><img src={WEB_BASE_URL + "/" + item.imageLink} alt="image" className="w-32"/></td>
@@ -146,6 +159,7 @@ export default function Testimonial() {
           </table>
         )}
       </div>
+      <Pagination data={listData} pageNo={handlePageChange} pageVal={page} totalCount={listData?.totalGalleries} />
       <Popup
         isOpen={isPopupOpen}
         title="Are you sure you want to delete this Gallery?"

@@ -102,7 +102,7 @@ const EditService = ({ params }) => {
   return (
     <section className='md:p-5'>
       <h1 className="text-2xl text-black underline mb-3 font-bold">
-        Edit Your Service Details
+        Edit Service
       </h1>
       <Link href="/Service">
         <div className="mt-7">

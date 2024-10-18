@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { API_BASE_URL } from "../../../../utils/constants";
+import { API_BASE_URL, WEB_BASE_URL } from "../../../../utils/constants";
 import { toast } from "react-toastify";
 import Popup from "@/components/Popup";
 import Pagination from "@/components/Pagination";
 
-export default function Contact() {
+export default function Testimonial() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [listData, setListData] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
@@ -20,23 +20,19 @@ export default function Contact() {
     });
   }, [page]);
 
-  // Function to fetch contact data
+  // Function to fetch Service data
   const fetchData = async () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `${API_BASE_URL}/contact/getAllContacts?page=${page}&limit=10`
+        `${API_BASE_URL}/banner/getAllBanners?page=${page}&limit=10`
       );
       const data = await res.json();
-      if (res.ok) {
-        console.log("Fetched data:", data);
-        setListData(data || []);
-      } else {
-        toast.error("Failed to fetch contacts.");
-      }
+      console.log("Fetched data:", data);
+      setListData(data || []);
     } catch (error) {
-      console.error("Error fetching Contacts:", error);
-      toast.error("An error occurred while fetching Contacts.");
+      console.error("Error fetching Services:", error);
+      toast.error("An error occurred while fetching Services.");
     } finally {
       setLoading(false);
     }
@@ -47,27 +43,29 @@ export default function Contact() {
     fetchData();
   }, [page]);
 
-  // Delete a Contact
+  // Delete a Service
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `${API_BASE_URL}/contact/deleteContact/${deleteId}`,
+        `${API_BASE_URL}/testimonial/deleteTestimonial/${deleteId}`,
         {
           method: "DELETE",
         }
       );
       const data = await res.json();
+      console.log(data);
 
-      if (res.ok) {
-        await fetchData(); // Re-fetch contact data after successful deletion
+      if (data) {
+        // Re-fetch contact data after successful deletion
+        await fetchData();
         setDeleteId(null);
         setIsPopupOpen(false);
-        toast.success("Contact deleted successfully.");
+        toast.success("Banner deleted successfully.");
       } else {
-        toast.error(data?.errMessage || "Failed to delete Contact.");
+        toast.error(data?.errMessage || "Failed to delete Service.");
       }
     } catch (error) {
-      toast.error("An error occurred while deleting the Contact.");
+      toast.error("An error occurred while deleting the Service.");
     }
   };
 
@@ -86,18 +84,19 @@ export default function Contact() {
     setPage(newPage);
   };
 
+
   return (
     <section className="md:p-5">
       <div className="relative overflow-x-auto sm:rounded-lg">
-        <h1 className="text-2xl text-black underline mb-3 font-bold">Contact</h1>
-        <div className="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 justify-end pb-4">
+        <h1 className="text-2xl text-black underline mb-3 font-bold">Banner</h1>
+        <div className="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0  justify-end pb-4">
           <div>
-            <Link href={"/Contact/AddContact"}>
+            <Link href={"/Banner/AddBanner"}>
               <button
                 className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 type="button"
               >
-                + Add Contact
+                + Add Banner
               </button>
             </Link>
           </div>
@@ -134,21 +133,19 @@ export default function Contact() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-3">Email</th>
-                <th scope="col" className="px-6 py-3 text-nowrap">Mobile Number</th>
-                <th scope="col" className="px-6 py-3">Address</th>
+                <th scope="col" className="px-6 py-3">S. No.</th>
+                <th scope="col" className="px-6 py-3">Image</th>
                 <th scope="col" className="px-6 py-3">Action</th>
               </tr>
             </thead>
             <tbody>
-              {listData?.contacts?.map((item) => (
-                <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="px-6 py-4">{item.emailAddress}</td>
-                  <td className="px-6 py-4">{item.phoneNumber}</td>
-                  <td className="px-6 py-4">{item.address}</td>
+              {listData?.banners?.map((item,index) => (
+                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="px-6 py-4">{index + 1}</td>
+                  <td className="px-6 py-4"><img src={WEB_BASE_URL + "/" + item.imageLink} alt="image" className="w-32"/></td>
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-2">
-                      <Link href={`/Contact/${item._id}`} className="font-medium text-blue-600 text-lg dark:text-blue-500 hover:underline">
+                      <Link href={`/Banner/${item._id}`} className="font-medium text-blue-600 text-lg dark:text-blue-500 hover:underline">
                         <i className="bi bi-pencil-square"></i>
                       </Link>
                       <button onClick={() => deleteTestimonialModal(item._id)} className="font-medium text-red-600 text-lg dark:text-red-500 hover:underline">
@@ -162,10 +159,10 @@ export default function Contact() {
           </table>
         )}
       </div>
-      <Pagination data={listData} pageNo={handlePageChange} pageVal={page} totalCount={listData?.totalContacts} />
+      <Pagination data={listData} pageNo={handlePageChange} pageVal={page} totalCount={listData?.totalBanners} />
       <Popup
         isOpen={isPopupOpen}
-        title="Are you sure you want to delete this Contact?"
+        title="Are you sure you want to delete this Banner?"
         confirmLabel="Yes, I'm sure"
         cancelLabel="No, cancel"
         onConfirm={handleDelete}

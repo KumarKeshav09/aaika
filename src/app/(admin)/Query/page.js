@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "../../../../utils/constants";
 import { toast } from "react-toastify";
+import Pagination from "@/components/Pagination";
 
 
 export default function Querys() {
@@ -41,6 +42,10 @@ export default function Querys() {
   
     fetchData();
   }, [page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
   
 
 
@@ -122,7 +127,7 @@ export default function Querys() {
               </tr>
             </thead>
             <tbody>
-              {listData?.map((item) => (
+              {listData?.queries.map((item) => (
                 <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.fullName}</td>
                   <td className="px-6 py-4">{item.emailAddress}</td>
@@ -145,6 +150,7 @@ export default function Querys() {
 
         )}
       </div>
+      <Pagination data={listData} pageNo={handlePageChange} pageVal={page} totalCount={listData?.totalQueries}  />
     </section>
   );
 }
