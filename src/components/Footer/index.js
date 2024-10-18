@@ -9,23 +9,35 @@ return <>
                
                     <h2 className="text-5xl text-[#3e3930]  italic font-normal mb-4">Aaika
                     </h2>
-                <div className="sm:flex flex-wrap">
-                <div className="uppercase tracking-widest md:mr-36">
-                 <p className="mb-2">
-                    <Link href="https">Weddings</Link>
+                    <div class="flex justify-between">
+ 
+  <div class="w-1/3"> 
+  Aiika is a Jaipur-based cloud kitchen, known for delivering authentic homemade meals with a touch of tradition.
+                      They focus on providing a variety of freshly prepared dishes, blending local flavors with modern convenience. 
+                      Customers can easily order through popular food delivery platforms.
+  </div>
+
+ 
+  <div class="flex space-x-4">
+    
+    <div class="w-1/3 uppercase tracking-widest mr-7"> 
+    <p className="mb-2">
+                    <Link href="Services">Services</Link>
                  </p>
                  <p className="mb-2">
-                    <Link href="https">Corporate</Link>
+                    <Link href="Gallery">Gallery</Link>
                  </p>
                  <p className="mb-2">
-                    <Link href="https">Events</Link>
+                    <Link href="Menu">Menu</Link>
                  </p>
                  <p className="mb-2">
-                    <Link href="https">Contacts</Link>
+                    <Link href="ContactUs">Contacts</Link>
                  </p>
-                </div>
-                <div className="uppercase tracking-widest md:mr-36">
-                 <p className="mb-2">
+    </div>
+    
+   
+    <div class="w-1/3 uppercase tracking-widest"> 
+    <p className="mb-2">
                     <Link href="https">Facebook</Link>
                  </p>
                  <p className="mb-2">
@@ -34,25 +46,11 @@ return <>
                  <p className="mb-2">
                     <Link href="https">instagram</Link>
                  </p>
-               
-                </div>
-                <div className="capitalize text-2xl italic">
-                 <p className="mb-2">
-                    <Link href="https">Receive</Link>
-                 </p>
-                 <p className="mb-2">
-                    <Link href="https">Updates & Special</Link>
-                 </p>
-                 <p className="mb-2">
-                    <Link href="https">Announcements</Link>
-                 </p>
-                 <p>
-                    <input type="email" placeholder="Email" class="appearance-none bg-[#f4f4f1]    border-x-0 border-t-0 border-b-2 focus:border-none"/>
-                    <button type="submit" class="py-2 px-4">Join</button>
-                 </p>
-               
-                </div>
-                </div>
+    </div>
+  </div>
+</div>
+
+             
                 
                 </div>
                 

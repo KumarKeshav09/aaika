@@ -1,44 +1,23 @@
 // Import necessary libraries and CSS
 "use client"
 import React from "react";
-import { motion } from "framer-motion";
+ 
 import Slider from "react-slick";
-import { Carousel } from "flowbite-react";
+ 
 import Link from "next/link";
+import { ImageSlider } from "@/components/ImageSlider";
+import QueryComp from "@/components/Common/query";
+import useFetch from "@/utils/useFetch";
+import { Spinner } from "flowbite-react";
+import { API_BASE_URL } from "@/utils/constants";
+ 
 
 
-// Define motion variants for the quote symbol
-const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1 } },
-};
+ 
 
-const textFadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1.5, delay: 0.5 } },
-};
-
-var herosettings = {
-    dots: false,
-    arrows:true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-};
-const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    speed: 100,
-    slidesToShow: 1,
-    autoplaySpeed: 2000,
-    slidesToScroll: 1,
-    arrows: false,
-    className: "text-center max-w-5xl mx-auto"
-};
+ 
+ 
+ 
 const companySettings = {
     dots: false,
     infinite: true,
@@ -61,40 +40,20 @@ const tetimonialSettings = {
     slidesToScroll: 1
   };
 const Introdocution = () => {
+    const { data:bannerData, loading, error } = useFetch(`${API_BASE_URL}/getAllBanners`);
+    console.log("data",bannerData)
+
     return (
         <>
-            <div className="">
-           
-                {/* bg-[url('/images/hero_banner8.webp')] */}
-
-                <section className=" bg-center  bg-no-repeat ">
-                
-                    <div className=" mx-auto w-full  text-center">
-                        <Slider {...herosettings}>
-                            <div className="heroImage1 heroimageCenter w-full">
-                                {/* <h1 className="homeheroLabourtext  bg-opacity-15 bg-black/30 tracking-tight leading-none text-white">
-                                    A special & unforgettable day
-                                </h1> */}
-
-                            </div>
-
-                            <div className="heroImage2 heroimageCenter w-full flex flex-col justify-center">
-                                {/* <h1 className="homeheroLabourtext  bg-opacity-60 bg-black/30  tracking-tight leading-none text-white ">
-                                    Say yes & enjoy your day
-                                </h1> */}
-                            </div>
-
-                            <div className="heroImage3 heroimageCenter w-full flex flex-col justify-center">
-                                {/* <h1 className="homeheroLabourtext  bg-opacity-60 bg-black/30  tracking-tight leading-none text-white ">
-                                    These memories are precious
-                                </h1> */}
-                            </div>
-                        </Slider>
-
-
-                    </div>
-                </section>
-            </div>
+            {
+                loading ?  <>
+                <div className="w-screen h-screen flex justify-center items-center">
+                <Spinner color="purple" aria-label="Purple spinner example" size="lg" />
+                <p className="mx-2">Loading...</p>
+                </div>
+                </>:<ImageSlider />
+            }
+             
             <div className="">
                 <div
                     initial="hidden"
@@ -296,33 +255,7 @@ const Introdocution = () => {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto py-16 px-5 lg:px-10 p-6">
-                <p className="uppercase tracking-widest text-center">Ready to get in touch?</p>
-                <h2 className="text-5xl text-[#3e3930]  italic font-normal mb-10 text-center">Make an Event Request
-                </h2>
-
-                <form action="#" method="POST">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-5">
-                        <div className="mb-4">
-
-                            <input type="text" id="name" placeholder="Name" name="name" className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        </div>
-
-                        <div className="mb-4">
-
-                            <input type="email" placeholder="Email" id="email" name="email" className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        </div>
-                    </div>
-
-
-                    <div className="mb-4">
-
-                        <textarea id="message" placeholder="Message" name="message" className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"></textarea>
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="text-gray-500   py-2 px-4 border border-gray-200">Get in Touch</button>
-                    </div>
-
-                </form>
+                 <QueryComp />
             </div>
             {/* <div className="max-w-7xl mx-auto py-16 px-5 lg:px-10 p-6">
                 <div className="flex">

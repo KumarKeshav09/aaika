@@ -1,50 +1,83 @@
 "use client";
 
+import QueryComp from "@/components/Common/query";
+
 export default function Menu() {
     
-  const companySettings = {
-    dots: false,
-    infinite: true,
-    autoplay: true,
-    speed: 100,
-    autoplaySpeed: 5000,
-    arrows: false,
-    slidesToShow: 5,
-    slidesToScroll: 3,
-  };
+  const menuCard = () => {
+    return <>
+     
+  <div class="w-[399px] hover-zoom shadow-lg overflow-hidden">
+    
+    <div class=" bg-black text-white py-6">
+      
+      <div class=" bg-black flex items-center justify-center">
+        <h1 class="text-3xl font-bold uppercase">Main Course</h1>
+      </div>
+    </div>
+
+ 
+    <div class="p-6">
+      <h2 class="text-center text-xl font-semibold mb-4 uppercase text-black">Breads / Rice</h2>
+      
+ 
+      <div class="space-y-4">
+ 
+        <div class="flex items-center justify-between bg-white text-black p-2">
+          <img src="https://img.freepik.com/free-photo/pizza-pizza-filled-with-tomatoes-salami-olives_140725-1200.jpg?size=626&ext=jpg&ga=GA1.1.913258732.1728641137&semt=ais_hybrid" alt="Ghee Chapati" class="w-12 h-12 rounded-lg" />
+          <span class="text-lg flex-grow mx-4">Ghee Chapati</span>
+          <span class="text-lg font-semibold">₹12/-</span>
+        </div>
+
+ 
+        <div class="flex items-center justify-between bg-white text-black p-2">
+          <img src="https://img.freepik.com/free-photo/pizza-pizza-filled-with-tomatoes-salami-olives_140725-1200.jpg?size=626&ext=jpg&ga=GA1.1.913258732.1728641137&semt=ais_hybrid" alt="Tikkad" class="w-12 h-12 rounded-lg" />
+          <span class="text-lg flex-grow mx-4">Tikkad</span>
+          <span class="text-lg font-semibold">₹35/-</span>
+        </div>
+ 
+        <div class="flex items-center justify-between bg-white text-black p-2">
+          <img src="https://img.freepik.com/free-photo/pizza-pizza-filled-with-tomatoes-salami-olives_140725-1200.jpg?size=626&ext=jpg&ga=GA1.1.913258732.1728641137&semt=ais_hybrid" alt="Plain Paratha" class="w-12 h-12 rounded-lg" />
+          <span class="text-lg flex-grow mx-4">Plain Paratha</span>
+          <span class="text-lg font-semibold">₹16/-</span>
+        </div>
+ 
+        <div class="flex items-center justify-between bg-white text-black p-2">
+          <img src="https://img.freepik.com/free-photo/pizza-pizza-filled-with-tomatoes-salami-olives_140725-1200.jpg?size=626&ext=jpg&ga=GA1.1.913258732.1728641137&semt=ais_hybrid" alt="Aloo/Aloo Pyaj Paratha" class="w-12 h-12 rounded-lg" />
+          <span class="text-lg flex-grow mx-4">Aloo/Aloo Pyaj Paratha (2)</span>
+          <span class="text-lg font-semibold">₹139/-</span>
+        </div>
+
+ 
+      
+      </div>
+      
+ 
+      {/* <div class="mt-8 text-center">
+        <button class="bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold uppercase">
+          Order Now
+        </button>
+      </div> */}
+       <div class="mt-8 py-2 text-center bg-black">
+         <p className="font-normal uppercase text-white">Note: minimum order 1 kg</p>
+      </div>
+    </div>
+  </div>
+    </>
+  }
   return (
     <>
       <section className="w-full h-screen bg-[url('/images/bgmenu.png')] bg-no-repeat bg-cover">
         {/* <h1 className="text-8xl font-normal text-white italic">Menu</h1> */}
       </section>
-      <div class="max-w-full mx-auto py-16 flex justify-around  lg:px-10 bg-[#f4f4f1]">
-      <div>
-      <img
-              src=" /images/menu1.jpg"
-              alt="Catering Image"
-              class="shadow-lg w-[500px] h-[600px] hover-zoom"
-            />
-      </div>
-      <div>
-      <img
-              src=" /images/menu2.jpg"
-              alt="Catering Image"
-              class="shadow-lg w-[500px] h-[600px] hover-zoom"
-            />
-      </div>
+     
           
        
          
         
-      </div>
+       
       <div class="max-w-full mx-auto py-16 flex justify-around  lg:px-10 bg-[#f4f4f1]">
-      <div>
-      <img
-              src=" /images/menu3.jpg"
-              alt="Catering Image"
-              class="shadow-lg w-[399px] h-[600px] hover-zoom"
-            />
-      </div>
+      {menuCard()}
       <div>
       <img
               src=" /images/menu5.jpg"
@@ -157,54 +190,7 @@ export default function Menu() {
        
      
       <div className="max-w-7xl mx-auto py-16 px-5 lg:px-10 p-6">
-        <p className="uppercase tracking-widest text-center">
-          Ready to get in touch?
-        </p>
-        <h2 className="text-5xl text-[#3e3930]  italic font-normal mb-10 text-center">
-          Make an Event Request
-        </h2>
-
-        <form action="#" method="POST">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-5">
-            <div className="mb-4">
-              <input
-                type="text"
-                id="name"
-                placeholder="Name"
-                name="name"
-                className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div className="mb-4">
-              <input
-                type="email"
-                placeholder="Email"
-                id="email"
-                name="email"
-                className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <textarea
-              id="message"
-              placeholder="Message"
-              name="message"
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows="4"
-            ></textarea>
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="text-gray-500   py-2 px-4 border border-gray-200"
-            >
-              Get in Touch
-            </button>
-          </div>
-        </form>
+         <QueryComp />
       </div>
 
     </>

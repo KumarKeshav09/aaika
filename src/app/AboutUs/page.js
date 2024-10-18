@@ -1,45 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import Slider from "react-slick";
+ 
 export default function AboutUs() {
-    const companySettings = {
-        dots: false,
-        infinite: true,
-        autoplay: true,
-        speed: 100,
-        autoplaySpeed: 5000,
-        arrows: false,
-        slidesToShow: 5,
-        slidesToScroll: 3
-        
-    }
+   
     return <>
         <section className="w-full h-screen flex justify-center items-center bg-[url('/images/bgmenu.png')] bg-no-repeat bg-cover">
             {/* <h1 className="text-8xl font-normal text-white italic">About us</h1> */}
         </section>
-        {/* <div className="slider-container max-w-7xl mx-auto py-10 px-2 lg:px-10">
-                <Slider {...companySettings}>
-                    <div>
-                        <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-3-hover.png" />
-                    </div>
-                    <div>
-                    <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-3-hover.png" />
-                    </div>
-                    <div>
-                    <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-2-hover.png" />
-                    </div>
-                    <div>
-                        <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-3-hover.png" />
-                    </div>
-                    <div>
-                    <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-2-hover.png" />
-                    </div>
-                    <div>
-                    <img src="https://banquet.qodeinteractive.com/wp-content/uploads/2019/11/h1-client-3-hover.png" />
-                    </div>
-                </Slider>
-            </div> */}
+       
         <div class="max-w-7xl mx-auto py-10 px-2 lg:px-10">
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
