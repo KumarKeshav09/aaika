@@ -1,5 +1,5 @@
 "use client"
-import Introdocution from "@/app/Home";
+import Introdocution from "@/app/(user)/Home";
 import Image from "next/image";
 
 export default function Home() {
