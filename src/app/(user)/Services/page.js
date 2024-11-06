@@ -1,3 +1,4 @@
+'use client';
 import Navbar from "@/components/NavBar";
 import styles from "./service.module.css";
 import Footer from "@/components/Footer";
