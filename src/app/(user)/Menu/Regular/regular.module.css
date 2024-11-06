@@ -1,0 +1,152 @@
+.menuBackground {
+  background-image: url("/images/menuHero.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 60vh; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* Adjust text color as needed */
+  text-align: center;
+}
+
+.menuContainer {
+  padding: 20px;
+  margin-left: 4rem;
+}
+
+.menuTitle {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.menuItem {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.menuItemRight {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menuImageContainer {
+  position: relative;
+  width: 80%; /* Set the desired width */
+  height: 60vh; /* Set the desired height */
+  align-content: center;
+}
+
+.menuImageContainerRight {
+  position: relative;
+  width: 80%; /* Set the desired width */
+  height: 60vh; /* Set the desired height */
+  align-content: center;
+}
+
+.menuImage1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.menuImage2 {
+  position: relative;
+  display: flex;
+  left: 100px;
+}
+
+.menuImage3 {
+  position: relative;
+  display: flex;
+  right: 100px;
+}
+
+.menuImage {
+  width: 30%;
+  height: 30%;
+  overflow: hidden;
+}
+
+/* .menuImage img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  } */
+
+.menuDetails {
+  justify-self: center;
+  width: 70%;
+}
+
+.menuItemTitle {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.menuItemDescription {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.submenu {
+  margin-top: 10px;
+}
+
+.submenuItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+.dishName {
+  font-size: large;
+  color: rgb(44, 41, 41);
+}
+
+.dishPrice {
+  font-weight: bold;
+  font-size: large;
+}
+
+.menuDetailsRight {
+  justify-self: start;
+  width: 60%;
+}
+
+@media (max-width: 425px) {
+  .menuItem {
+    display: grid;
+    grid-template-columns: auto;
+    margin-bottom: 2px;
+    align-items: center;
+    gap: 1rem;
+  }
+  .menuItemRight {
+    display: grid;
+    grid-template-columns: auto;
+    margin-bottom: 2px;
+    align-items: center;
+  }
+  .menuImageContainerRight {
+    position: relative;
+    width: 50%; /* Set the desired width */
+    height: 70vh; /* Set the desired height */
+    justify-self: end;
+    margin-top: 2rem;
+  }
+  .menuDetails {
+    padding: 1rem 0rem;
+  }
+}

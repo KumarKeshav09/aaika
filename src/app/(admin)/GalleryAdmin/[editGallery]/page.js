@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { API_BASE_URL } from "../../../../../utils/constants";
+import { API_BASE_URL, WEB_BASE_URL } from "../../../../../utils/constants";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -156,6 +156,15 @@ const EditGalleryPage = ({ params }) => {
               className="bg-gray-50 border border-gray-300 rounded-md w-full text-gray-900"
             />
           </div>
+          {uploadedImage && (
+            <div className="mt-4">
+              <img
+                src={WEB_BASE_URL + "/" + uploadedImage}
+                alt="Uploaded Preview"
+                className="max-w-full h-auto rounded-md"
+              />
+            </div>
+          )}
           <button
             type="submit"
             disabled={!uploadedImage}

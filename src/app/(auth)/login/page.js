@@ -56,6 +56,7 @@ export default function Login() {
   };
   return (
     <>
+    <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
       <section
         className={` ${Styles.loginMain} bg-gray-50 dark:bg-gray-900 h-100`}
       >

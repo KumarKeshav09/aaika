@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import { API_BASE_URL } from "../../../../../utils/constants";
+import { API_BASE_URL, WEB_BASE_URL } from "../../../../../utils/constants";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -146,6 +146,15 @@ const TestimonialPage = () => {
               required
             />
           </div>
+          {uploadedImage && (
+            <div className="mt-4">
+              <img
+                src={WEB_BASE_URL + "/" + uploadedImage}
+                alt="Uploaded Preview"
+                className="max-w-full h-auto rounded-md"
+              />
+            </div>
+          )}
           <button
             type="submit"
             disabled={!uploadedImage}

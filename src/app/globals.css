@@ -22,6 +22,18 @@
   }
 }
 
+@font-face {
+  font-family: 'Samarkan';
+  src: url('/SAMARN__.TTF') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.samarkan-font {
+  font-family: 'Samarkan', sans-serif;
+}
+
+
 body {
   overflow-x: hidden;
   color: #776f60;
