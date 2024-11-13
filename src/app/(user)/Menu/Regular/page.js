@@ -8,25 +8,59 @@ import { API_BASE_URL } from "@/utils/constants";
 import { useEffect, useState } from "react";
 import styles from "./regular.module.css";
 
-// Static images array (modify this with your actual images)
-const staticImages = [
-  "/images/menu1.jpg",
-  "https://www.freepik.com/free-photo/catering-buffet-food_3818811.htm#fromView=search&page=1&position=26&uuid=31d5f5ac-ede3-4726-a19f-d41079ff2c66",
-  "https://images.pexels.com/photos/8818723/pexels-photo-8818723.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "/images/menu4.jpg",
-  // Add more images as needed
-];
-
 export default function Menu() {
   const [listData, setListData] = useState([]);
+  const [subMenus, setSubMenuData] = useState([]);
+  const [subMenusS, setSubMenuDataS] = useState([]);
+  const [subMenusI, setSubMenuDataI] = useState([]);
+  const [subMenusM, setSubMenuDataM] = useState([]);
+  const [subMenusIt, setSubMenuDataIt] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/v1/menu/getAllMenus`);
+      const res = await fetch(`${API_BASE_URL}/menu/getAllSubMenus`);
       const data = await res.json();
-      setListData(data || []);
+
+      if (Array.isArray(data?.data)) {
+        const filteredData = data?.data?.filter(
+          (item) => item.menu?.title === "American BBQ"
+        );
+        const filteredDataSushi = data?.data?.filter(
+          (item) => item.menu?.title === "Japanese Sushi"
+        );
+        const filteredDataIndian = data?.data?.filter(
+          (item) => item.menu?.title === "Indian Delights"
+        );
+        const filteredDataMexican = data?.data?.filter(
+          (item) => item.menu?.title === "Mexican Fiesta"
+        );
+        const filteredDataItalian = data?.data?.filter(
+          (item) => item.menu?.title === "Italian Cuisine"
+        );
+        setListData(filteredData || []);
+
+        const subMenus = filteredData.flatMap((item) => item.submenu);
+        const subMenusSushi = filteredDataSushi.flatMap((item) => item.submenu);
+        const subMenusIndian = filteredDataIndian.flatMap(
+          (item) => item.submenu
+        );
+        const subMenusMexican = filteredDataMexican.flatMap(
+          (item) => item.submenu
+        );
+        const subMenusItalian = filteredDataItalian.flatMap(
+          (item) => item.submenu
+        );
+        setSubMenuData(subMenus || []);
+        setSubMenuDataS(subMenusSushi || []);
+        setSubMenuDataI(subMenusIndian || []);
+        setSubMenuDataM(subMenusMexican || []);
+        setSubMenuDataIt(subMenusItalian || []);
+      } else {
+        setListData([]);
+        setSubMenuData([]);
+      }
     } catch (error) {
       console.error("Error fetching Services:", error);
     } finally {
@@ -46,7 +80,7 @@ export default function Menu() {
           <h1 className="font-medium italic md:text-8xl text-7xl">Menu</h1>
         </div>
       </div>
-      <div className="lg:px-48">
+      <div className={`${styles.widthMain}`}>
         {loading ? (
           <div role="status" className="justify-center">
             <svg
@@ -98,20 +132,16 @@ export default function Menu() {
                   and flavorful falafel, each bite is packed with wholesome
                   goodness.
                 </p>
-                <div className={styles.submenu}>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>
-                      Stuffed Bell Peppers
-                    </span>
-                    <span className={styles.dishPrice}>₹250</span>
+                {subMenus.map((item, index) => (
+                  <div key={index} className={styles.submenu}>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className={styles.dishName}>{item.name}</span>
+                      <span className="flex-grow border-b border-gray-300"></span>
+                      <span className={styles.dishPrice}>₹{item.price}</span>
+                    </div>
+                    <p className="text-sm">({item.description})</p>
                   </div>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>
-                      Grilled Vegetable Skewers
-                    </span>
-                    <span className={styles.dishPrice}>₹200</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -130,16 +160,16 @@ export default function Menu() {
                   and flavorful falafel, each bite is packed with wholesome
                   goodness.
                 </p>
-                <div className={styles.submenu}>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>Grilled Salmon</span>
-                    <span className={styles.dishPrice}>₹500</span>
+                {subMenusS.map((item, index) => (
+                  <div key={index} className={styles.submenu}>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className={styles.dishName}>{item.name}</span>
+                      <span className="flex-grow border-b border-gray-300"></span>
+                      <span className={styles.dishPrice}>₹{item.price}</span>
+                    </div>
+                    <p className="text-sm">({item.description})</p>
                   </div>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>Shrimp Cocktail</span>
-                    <span className={styles.dishPrice}>₹300</span>
-                  </div>
-                </div>
+                ))}
               </div>
               <div className={styles.menuImageContainerRight}>
                 <div className={styles.menuImage1}>
@@ -186,18 +216,16 @@ export default function Menu() {
                   and flavorful falafel, each bite is packed with wholesome
                   goodness.
                 </p>
-                <div className={styles.submenu}>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>
-                      Steak with Garlic Butter
-                    </span>
-                    <span className={styles.dishPrice}>₹700</span>
+                {subMenusI.map((item, index) => (
+                  <div key={index} className={styles.submenu}>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className={styles.dishName}>{item.name}</span>
+                      <span className="flex-grow border-b border-gray-300"></span>
+                      <span className={styles.dishPrice}>₹{item.price}</span>
+                    </div>
+                    <p className="text-sm">({item.description})</p>
                   </div>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>BBQ Ribs</span>
-                    <span className={styles.dishPrice}>₹600</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -216,16 +244,16 @@ export default function Menu() {
                   and flavorful falafel, each bite is packed with wholesome
                   goodness.
                 </p>
-                <div className={styles.submenu}>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>Fettuccine Alfredo</span>
-                    <span className={styles.dishPrice}>₹400</span>
+                {subMenusM.map((item, index) => (
+                  <div key={index} className={styles.submenu}>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className={styles.dishName}>{item.name}</span>
+                      <span className="flex-grow border-b border-gray-300"></span>
+                      <span className={styles.dishPrice}>₹{item.price}</span>
+                    </div>
+                    <p className="text-sm">({item.description})</p>
                   </div>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>Pesto Penne</span>
-                    <span className={styles.dishPrice}>₹350</span>
-                  </div>
-                </div>
+                ))}
               </div>
               <div className={styles.menuImageContainerRight}>
                 <div className={styles.menuImage1}>
@@ -270,35 +298,16 @@ export default function Menu() {
                   flaky fruit tarts and decadent brownies, our dessert menu
                   offers something for every occasion.
                 </p>
-                <div className={styles.submenu}>
-                  <div className="flex items-center space-x-2 mt-4">
-                    <span className={styles.dishName}>Chocolate Lava Cake</span>
-                    <span className="flex-grow border-b border-gray-300">
-                      &nbsp;
-                    </span>
-                    <span className={styles.dishPrice}>₹250</span>
+                {subMenusIt.map((item, index) => (
+                  <div key={index} className={styles.submenu}>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className={styles.dishName}>{item.name}</span>
+                      <span className="flex-grow border-b border-gray-300"></span>
+                      <span className={styles.dishPrice}>₹{item.price}</span>
+                    </div>
+                    <p className="text-sm">({item.description})</p>
                   </div>
-                  <p className="text-sm">(Chocolate, Chocolate, Chocolate)</p>
-                  <div className="flex items-center space-x-2 mt-4">
-                    <span className={styles.dishName}>Chocolate Lava Cake</span>
-                    <span className="flex-grow border-b border-gray-300"></span>
-                    <span className={styles.dishPrice}>₹250</span>
-                  </div>
-                  <p className="text-sm">(Chocolate, Chocolate, Chocolate)</p>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>
-                      Cheesecake{"  "}
-                      <span className="text-sm text-gray-500">
-                        (Chocolate, Chocolate, Chocolate)
-                      </span>
-                    </span>
-                    <span className={styles.dishPrice}>₹200</span>
-                  </div>
-                  <div className={styles.submenuItem}>
-                    <span className={styles.dishName}>Chocolate Lava Cake</span>
-                    <span className={styles.dishPrice}>₹250</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

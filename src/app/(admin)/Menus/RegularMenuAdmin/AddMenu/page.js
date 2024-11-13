@@ -1,112 +1,90 @@
 "use client";
-import { useState } from "react";
-import { API_BASE_URL, WEB_BASE_URL } from "../../../../../utils/constants";
+import { API_BASE_URL } from "@/utils/constants";
 import Link from "next/link";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
-export default function AddMenu() {
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState(null);
-  const [subTitle, setSubTitle] = useState("");
-  const [note, setNote] = useState("");
-  const [submenu, setSubmenu] = useState([
-    { name: "", price: "", productImage: null },
+export default function CreateSubMenu() {
+  const [menuId, setMenuId] = useState("");  // State to hold the selected menu ID
+  const [menus, setMenus] = useState([]);    // State to hold the list of menus fetched from the API
+  const [submenu, setSubmenu] = useState([   // State to hold submenu items
+    { name: "", price: "", description: "" },
   ]);
-  const [showImageUpload, setShowImageUpload] = useState("yes");
+  const [isLoading, setIsLoading] = useState(false);  // Loading state for the form submission
+  const [error, setError] = useState(null);  // Error state for any issues during form submission
+  const [successMessage, setSuccessMessage] = useState(null);  // Success message state
 
-  const handleSubmenuChange = (index, field, value) => {
-    const newSubmenu = [...submenu];
-    newSubmenu[index][field] = value;
-    setSubmenu(newSubmenu);
-  };
-
-  const handleAddSubmenu = () => {
-    setSubmenu([...submenu, { name: "", price: "", productImage: null }]);
-  };
-
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const response = await fetch(`${API_BASE_URL}/auth/upload`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Image upload failed");
-    }
-
-    const data = await response.json();
-    return data.url || data.imageUrl;
-  };
-
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  // Fetch all menus from the API
+  useEffect(() => {
+    const fetchMenus = async () => {
       try {
-        const imageUrl = await uploadImage(file);
-        setImage(imageUrl);
-      } catch (error) {
-        console.error("Error uploading image:", error);
+        const response = await fetch(`${API_BASE_URL}/menu/getAllMenus`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch menus");
+        }
+        const data = await response.json();
+        setMenus(data?.menus || []); // Assuming 'menus' is the key in the API response
+      } catch (err) {
+        setError(err.message);  // Set error if the fetch fails
       }
-    }
+    };
+
+    fetchMenus();
+  }, []);
+
+  // Handle changes in submenu items (name, price, description)
+  const handleSubmenuChange = (index, e) => {
+    const updatedSubmenu = [...submenu];
+    updatedSubmenu[index][e.target.name] = e.target.value;
+    setSubmenu(updatedSubmenu);
   };
 
-  const handleSubmenuImageUpload = async (index, e) => {
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        const productImageUrl = await uploadImage(file);
-        handleSubmenuChange(index, "productImage", productImageUrl);
-      } catch (error) {
-        console.error("Error uploading submenu image:", error);
-      }
-    }
+  // Add a new submenu item to the list
+  const addSubmenuItem = () => {
+    setSubmenu([...submenu, { name: "", price: "", description: "" }]);
   };
 
-  const r = useRouter();
-
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setSuccessMessage(null);
 
-    const menuData = {
-      title,
-      image,
-      subTitle,
-      note,
-      submenu,
+    const data = {
+      menu: menuId,  // Sending the _id of the selected menu
+      submenu: submenu.map((item) => ({
+        name: item.name,
+        price: parseFloat(item.price),
+        description: item.description,
+      })),
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/menu/createMenu`, {
+      const response = await fetch(`${API_BASE_URL}/menu/createSubMenu`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(menuData),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create menu");
+        throw new Error("Failed to create submenu");
       }
 
-      toast.success("Menu created successfully!");
-      r.push("/Menus");
+      const result = await response.json();
+      setSuccessMessage("Submenu created successfully!");
+      setIsLoading(false);
+      setSubmenu([{ name: "", price: "", description: "" }]); // Reset form after submission
     } catch (error) {
-      console.error("Error creating menu:", error);
+      setError(error.message);
+      setIsLoading(false);
     }
   };
 
-  const handleRemoveSubmenu = (index) => {
-    const newSubmenu = submenu.filter((_, i) => i !== index);
-    setSubmenu(newSubmenu);
-  };
-
   return (
-    <section className="md:p-5">
-      <h1 className="text-2xl text-black underline mb-3 font-bold">Add Menu</h1>
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl text-black underline mb-3 font-bold">Add Submenu</h1>
       <Link href="/Menus">
         <div className="mb-5 mt-5">
           <button
@@ -117,238 +95,116 @@ export default function AddMenu() {
           </button>
         </div>
       </Link>
-      <div className="container mx-auto p-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className=" items-center mb-4">
-            <div>
-              <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                htmlFor="note"
-              >
-                Do you have the image of menu?
-              </label>
-            </div>
-            <div className="flex">
-              <label className="block mb-2 mr-6 text-sm font-medium text-gray-900 dark:text-white required">
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Menu selection dropdown */}
+        <div>
+          <label htmlFor="menuId" className="block text-sm font-medium text-gray-900">
+            Menu:
+          </label>
+          <select
+            id="menuId"
+            value={menuId}
+            onChange={(e) => setMenuId(e.target.value)}  // Set the selected menu ID
+            required
+            className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
+          >
+            <option value="" disabled>
+              Select a menu
+            </option>
+            {menus.map((menu) => (
+              <option key={menu._id} value={menu._id}>
+                {menu.title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Submenu items */}
+        {submenu.map((item, index) => (
+          <div key={index} className="border p-4 rounded-md shadow-sm bg-white">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Submenu Item {index + 1}
+            </h3>
+
+            <div className="flex space-x-2 mb-2">
+              {/* Submenu name */}
+              <div className="flex-1">
+                <label htmlFor={`name-${index}`} className="block text-sm font-medium text-gray-900">
+                  Name:
+                </label>
                 <input
-                  type="radio"
-                  value="yes"
-                  checked={showImageUpload === "yes"}
-                  onChange={() => setShowImageUpload("yes")}
+                  type="text"
+                  id={`name-${index}`}
+                  name="name"
+                  value={item.name}
+                  onChange={(e) => handleSubmenuChange(index, e)}
+                  required
+                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
                 />
-                Yes
-              </label>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required">
+              </div>
+
+              {/* Submenu price */}
+              <div className="w-36">
+                <label htmlFor={`price-${index}`} className="block text-sm font-medium text-gray-900">
+                  Price:
+                </label>
                 <input
-                  type="radio"
-                  value="no"
-                  checked={showImageUpload === "no"}
-                  onChange={() => setShowImageUpload("no")}
+                  type="number"
+                  id={`price-${index}`}
+                  name="price"
+                  value={item.price}
+                  onChange={(e) => handleSubmenuChange(index, e)}
+                  required
+                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
                 />
-                No
-              </label>
+              </div>
+
+              {/* Submenu description */}
+              <div className="flex-1">
+                <label htmlFor={`description-${index}`} className="block text-sm font-medium text-gray-900">
+                  Description:
+                </label>
+                <input
+                  type="text"
+                  id={`description-${index}`}
+                  name="description"
+                  value={item.description}
+                  onChange={(e) => handleSubmenuChange(index, e)}
+                  required
+                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
+                />
+              </div>
             </div>
           </div>
+        ))}
 
-          {showImageUpload === "yes" && (
-            <>
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="menuTitle"
-                >
-                  Menu Title
-                </label>
-                <input
-                  id="menuTitle"
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="note"
-                >
-                  Note
-                </label>
-                <textarea
-                  id="note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                ></textarea>
-              </div>
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="menuImage"
-                >
-                  Menu Image
-                </label>
-                <input
-                  id="menuImage"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="bg-gray-50 border border-gray-300 rounded-md w-full text-gray-900"
-                />
-                {image && (
-                  <img
-                    src={WEB_BASE_URL + "/" + image}
-                    alt="Menu"
-                    className="my-2 h-32 object-cover"
-                  />
-                )}
-              </div>
-            </>
-          )}
+        {/* Button to add more submenu items */}
+        <div className="flex justify-between items-center">
+          <button
+            type="button"
+            onClick={addSubmenuItem}
+            className="bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          >
+            Add Another Item
+          </button>
+        </div>
 
-          {showImageUpload === "no" && (
-            <>
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="menuTitle"
-                >
-                  Menu Title
-                </label>
-                <input
-                  id="menuTitle"
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                  required
-                />
-              </div>
+        {/* Error and success messages */}
+        {error && <p className="text-red-500">{error}</p>}
+        {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="subTitle"
-                >
-                  Subtitle
-                </label>
-                <input
-                  id="subTitle"
-                  type="text"
-                  value={subTitle}
-                  onChange={(e) => setSubTitle(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                />
-              </div>
-
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                  htmlFor="note"
-                >
-                  Note
-                </label>
-                <textarea
-                  id="note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                ></textarea>
-              </div>
-
-              <div className="flex justify-between">
-                <h2 className="text-xl font-semibold">Submenu Items</h2>
-                <button
-                  type="button"
-                  onClick={handleAddSubmenu}
-                  className="bg-white text-gray-900 border px-4 py-2 rounded mr-5"
-                >
-                  Add Submenu Item
-                </button>
-              </div>
-              {submenu.map((item, index) => (
-                <div key={index} className="flex space-x-2 mb-2">
-                  <div className="flex-1">
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                      htmlFor={`itemName${index}`}
-                    >
-                      Item Name
-                    </label>
-                    <input
-                      id={`itemName${index}`}
-                      type="text"
-                      value={item.name}
-                      onChange={(e) =>
-                        handleSubmenuChange(index, "name", e.target.value)
-                      }
-                      className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div className="w-24">
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                      htmlFor={`itemPrice${index}`}
-                    >
-                      Price
-                    </label>
-                    <input
-                      id={`itemPrice${index}`}
-                      type="number"
-                      value={item.price}
-                      onChange={(e) =>
-                        handleSubmenuChange(index, "price", e.target.value)
-                      }
-                      className="bg-gray-50 border border-gray-300 rounded-md p-2 w-full text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white required"
-                      htmlFor={`itemImage${index}`}
-                    >
-                      Item Image
-                    </label>
-                    <input
-                      id={`itemImage${index}`}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleSubmenuImageUpload(index, e)}
-                      className="bg-gray-50 border border-gray-300 rounded-md w-full text-gray-900"
-                    />
-                    {item.productImage && (
-                      <img
-                        src={WEB_BASE_URL + "/" + item.productImage}
-                        alt="Submenu"
-                        className="my-2 h-16 object-cover"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center">
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveSubmenu(index)}
-                      className="bg-red-500 text-white px-2 p-2 py-2 mt-6 rounded"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-
+        {/* Submit button */}
+        <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-gray-900 text-white px-4 py-2 rounded"
+            disabled={isLoading}
+            className={`bg-gray-900 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            Add Menu
+            {isLoading ? "Submitting..." : "Create Submenu"}
           </button>
-        </form>
-      </div>
-    </section>
+        </div>
+      </form>
+    </div>
   );
 }

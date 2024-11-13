@@ -47,7 +47,7 @@ export default function RegularMenuAdmin() {
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `${API_BASE_URL}/menu/deleteMenu/${deleteId}`,
+        `${API_BASE_URL}/menu/deleteSubMenu/${deleteId}`,
         {
           method: "DELETE",
         }
@@ -90,7 +90,7 @@ export default function RegularMenuAdmin() {
       <div className="relative overflow-x-auto sm:rounded-lg">
         <div className="flex flex-col sm:flex-row flex-wrap space-y-4 sm:space-y-0 justify-end pb-4">
           <div>
-            <Link href={"/Menus/AddMenu"}>
+            <Link href={"/Menus/RegularMenuAdmin/AddMenu"}>
               <button
                 className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 type="button"

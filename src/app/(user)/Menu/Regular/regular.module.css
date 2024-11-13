@@ -99,6 +99,10 @@
   text-align: justify;
 }
 
+.widthMain{
+  padding: 0rem 12rem;
+}
+
 .submenu {
   margin-top: 10px;
 }
@@ -125,6 +129,24 @@
   width: 60%;
 }
 
+@media (max-width: 1024px) {
+  .widthMain{
+    padding: 0rem 2rem;
+  }
+  .menuImageContainerRight {
+    position: relative;
+    width: 100%; /* Set the desired width */
+    height: 50vh; /* Set the desired height */
+    justify-self: end;
+    margin-top: 2rem;
+  }
+  .menuImage {
+    width: 50%;
+    height: 50%;
+    overflow: hidden;
+  }
+}
+
 @media (max-width: 425px) {
   .menuItem {
     display: grid;
@@ -141,12 +163,20 @@
   }
   .menuImageContainerRight {
     position: relative;
-    width: 50%; /* Set the desired width */
+    width: 65%; /* Set the desired width */
     height: 70vh; /* Set the desired height */
     justify-self: end;
     margin-top: 2rem;
   }
   .menuDetails {
     padding: 1rem 0rem;
+    width: 100%;
+  }
+  .menuDetailsRight {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .menuContainer {
+    margin: 1rem;
   }
 }
